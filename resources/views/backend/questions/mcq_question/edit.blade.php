@@ -182,6 +182,7 @@
                     <div class="modal-footer">
 
                         <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-secondary" type="reset">Reset</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
@@ -229,12 +230,16 @@
 
         // get options ajax
         $(document).ready(function() {
+            getQuestions();
+        });
+
+        function getQuestions() {
             let url = '{{ request()->url() }}';
             $.get(url).done(res => {
                 // console.log(res);
                 $('#question_list').html(res);
             });
-        });
+        }
 
         // ADD NEW QUESTION MODAL OPTION
         $('form').on('click', '.addModalOption', function() {
@@ -251,13 +256,15 @@
 
             $.post("{!! route('admin.mcq.option.create', $question) !!}", formData,
                 function(data, textStatus, jqXHR) {
-                    console.log(data);
+                    // console.log(data);
 
                     if (data.success) {
-                        toastr.success(data.message)
-                        location.reload()
+                        toastr.success(data.message);
+                        $('#addQuestionModal').modal('hide');
+                        getQuestions();
+                        // location.reload()
                     } else {
-                        toastr.error(data.message)
+                        toastr.error(data.message);
                     }
                 },
                 "json"
@@ -268,7 +275,7 @@
         }
 
         // REMOVE QUESTION OPTION
-          $(document).on('click', '.removeOption', function() {
+        $(document).on('click', '.removeOption', function() {
             let optionsCount = $(this).parent().parent().parent().children().length;
             if (optionsCount > 1) {
                 $(this).parent().parent().remove();
