@@ -1,0 +1,222 @@
+@media only screen and (max-width:1199px) {
+    .question-list-box {
+        width: 33.33%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width:991px) {
+    .blog-main {
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .nxt {
+        right: 42%;
+    }
+
+    .prv {
+        left: 42%;
+    }
+
+    .question-list-box {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width:767px) {
+    .ht-right {
+        text-align: right;
+    }
+
+    .ht-left {
+        display: none;
+    }
+
+    .ht-left span {
+        display: inline;
+    }
+
+    .menubar {
+        display: none;
+    }
+
+    .mobile-btn i {
+        display: block;
+    }
+
+    .ht-middle {
+        text-align: right;
+        padding: 0px 0;
+    }
+
+    .ht-right {
+        text-align: left;
+        padding: 7px 0px;
+    }
+
+    .nxt {
+        right: 40%;
+    }
+
+    .prv {
+        left: 40%;
+    }
+
+    .question-list-box {
+        width: 50%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width:575px) {
+    .ht-middle {
+        display: none;
+    }
+
+    .ht-right {
+        text-align: center;
+        padding: 18px 0;
+    }
+
+    .question-list-box {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .question-list-box-content {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .question-list-box {
+        margin-bottom: 10px;
+    }
+
+    .ht-right a {
+        padding: 6px 11px;
+
+    }
+    .header-top{
+        padding: 10px 0;
+    }
+    .mobile-btn > i{
+        font-size: 26px;
+    }
+    .mobile-btn h4{
+        font-size: 16px;
+    }
+    .section-title h2{
+        font-size: 18px;
+    }
+    .about-txt h2{
+        font-size: 18px;
+    }
+    .about-txt h5{
+        font-size: 16px;
+    }
+    .about-txt p{
+        font-size: 14px;
+    }
+    body{
+        font-size: 14px;
+    }
+    .mobile-btn i{
+        font-size: 20px;
+    }
+    .carousel-caption h1{
+        font-size: 20px;
+    }
+    .mini-show {
+        display: inline flow-root list-item;
+        list-style: none;
+        display: inline-block;
+    }
+    .header-top-section{
+        display: none;
+    }
+    
+}
+
+
+@media only screen and (max-width:519px) {
+    .ht-left span {
+        display: inline;
+    }
+
+    .nxt {
+        right: 37%;
+    }
+
+    .prv {
+        left: 37%;
+    }
+
+    .qes-btn a {
+        font-size: 14px;
+        padding: 10px 5px;
+    }
+
+    .qes-btn a i {
+        font-size: 12px;
+    }
+
+    .enroll-descount span {
+        font-size: 16px;
+    }
+    
+    
+    .dashboard-left{
+        display: none;
+    }
+
+    .ud-mobile{
+        display: block;
+    }
+
+
+}
+
+@media only screen and (max-width:400px) {
+    .ht-left span {
+        display: inline;
+    }
+
+    .nxt {
+        right: 33%;
+    }
+
+    .prv {
+        left: 33%;
+    }
+
+    .question-list-box {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .enroll-qus .enroll-descount {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+
+    }
+
+    .enroll-qus .qes-btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+
+    }
+    
+    
+    .dashboard-left{
+        display: none;
+    }
+
+    .ud-mobile{
+        display: block;
+    }
+
+}
