@@ -122,10 +122,28 @@ class McqQuestionController extends Controller
      */
     public function store(Request $request)
     {
-
+        if ($request->ajax()) {
+            // ajax check for answers
+            $check_answers = collect($request->get('question'))->map(function ($item, $index) {
+                return in_array(true, (array) request()->get($index . '_answer'));
+            })->toArray();
+            if (in_array(false, $check_answers)) {
+                return response([
+                    'success' => false,
+                    'message' => 'Please check the answers again.',
+                ]);
+            } else {
+                return response([
+                    'success' => true,
+                    'saved' => true,
+                    'message' => 'Mcq Question created Successfully Added!',
+                    'redirect' => route('admin.mcq.index'),
+                ]);
+            }
+        }
 
         $input  = $request->all();
-        // return $request;
+
         $request->validate([
             'class_id'          => 'required',
             'session_id'        => 'required',
@@ -137,7 +155,6 @@ class McqQuestionController extends Controller
 
             //'activate_status'   => $request->previous_admitted == "" ?'required':'nullable',
         ]);
-        // dd('request validated');
 
         $subject = new McqQuestionSubject();
         $subject->class_id              = $request->class_id;
@@ -160,23 +177,15 @@ class McqQuestionController extends Controller
             $mcqQ->describe         = $request->describe[$key];
 
             if (!empty($input['image'][$key])) {
+                $image = $input['image'][$key];
 
-
-                if ($request->image != null) {
-
-                    if ($input['image'] != ' ') {
-
-                        $image = $input['image'][$key];
-
-                        if ($image) {
-                            $uniqname = uniqid();
-                            $ext = strtolower($image->getClientOriginalExtension());
-                            $filepath = 'public/images/questions/';
-                            $imagename = $filepath . $uniqname . '.' . $ext;
-                            $image->move($filepath, $imagename);
-                            $mcqQ->image  = $imagename;
-                        }
-                    }
+                if ($image) {
+                    $uniqname = uniqid();
+                    $ext = strtolower($image->getClientOriginalExtension());
+                    $filepath = 'public/images/questions/';
+                    $imagename = $filepath . $uniqname . '.' . $ext;
+                    $image->move($filepath, $imagename);
+                    $mcqQ->image  = $imagename;
                 }
             }
 
@@ -201,6 +210,14 @@ class McqQuestionController extends Controller
 
 
 
+
+        // return
+        //     response([
+        //         'success' => true,
+        //         'saved' => true,
+        //         'message' => 'Mcq Question created Successfully Added!',
+        //         'redirect' => route('admin.mcq.index'),
+        //     ]);
 
 
         $notification = array(

@@ -1,326 +1,318 @@
 @extends('backend.layouts.app')
 @section('title', 'Add New Question')
 @push('css')
-<style>
-    .text-danger {
-        padding-left: 3%;
-    }
-</style>
+    <style>
+        .text-danger {
+            padding-left: 3%;
+        }
+
+    </style>
 @endpush
 @section('content')
 
 
 
-<div id="content" class="content">
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="panel panel-inverse" data-sortable-id="form-stuff-10">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Add Question</h4>
-                    <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default"
-                            data-click="panel-expand">
-                            <i class="fa fa-expand"></i>
-                        </a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success"
-                            data-click="panel-reload">
-                            <i class="fa fa-redo"></i>
-                        </a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning"
-                            data-click="panel-collapse">
-                            <i class="fa fa-minus"></i>
-                        </a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger"
-                            data-click="panel-remove">
-                            <i class="fa fa-times"></i>
-                        </a>
+    <div id="content" class="content">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="panel panel-inverse" data-sortable-id="form-stuff-10">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Add Question</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload">
+                                <i class="fa fa-redo"></i>
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                                <i class="fa fa-minus"></i>
+                            </a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <form action="{{ route('admin.mcq.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group row" style="margin-bottom:25px;">
-                            <div class="col-md-6">
-                                <label for="" class="col-md-12">Question No/Name/Others <small>(Unique)</small></label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control" name="question_no"
-                                        value="{{ old('question_no') }}" placeholder="Question No/Name/Others">
+                    <div class="panel-body">
+                        <form action="{{ route('admin.mcq.store') }}" method="POST" enctype="multipart/form-data" id="addForm">
+                            @csrf
+                            <div class="form-group row" style="margin-bottom:25px;">
+                                <div class="col-md-6">
+                                    <label for="" class="col-md-12">Question No/Name/Others <small>(Unique)</small></label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" name="question_no"
+                                               value="{{ old('question_no') }}" placeholder="Question No/Name/Others">
+                                    </div>
+                                    <div class="text-danger">{!! $errors->first('question_no') !!}</div>
                                 </div>
-                                <div class="text-danger">{!! $errors->first('question_no') !!}</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-md-12">Subject Name</label>
-                                <div class="col-md-12">
-                                    <select name="subject_id" id="subject_id" class="form-control" required>
-                                        <option value="">Select One</option>
-                                        @foreach ($subjects as $subject)
-                                        <option {{ old('subject_id') == $subject->id ? 'selected' : '' }}
-                                            value="{{ $subject->id }}">{{ $subject->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="text-danger">{{ $errors->first('subject_id') }}</div>
+                                <div class="col-md-6">
+                                    <label class="col-md-12">Subject Name</label>
+                                    <div class="col-md-12">
+                                        <select name="subject_id" id="subject_id" class="form-control" required>
+                                            <option value="">Select One</option>
+                                            @foreach ($subjects as $subject)
+                                                <option {{ old('subject_id') == $subject->id ? 'selected' : '' }}
+                                                        value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="text-danger">{{ $errors->first('subject_id') }}</div>
+                                    </div>
                                 </div>
-                            </div>
 
 
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <label for="Subject" class="col-md-12">Chapter :</label>
-                                <div class="col-md-12">
-
-                                    <select name="chapter_id" id="chapter_id" class="form-control">
-                                        <option value="">Select Chapter</option>
-
-                                    </select>
-                                    <div class="text-danger">{{ $errors->first('chapter_id') }}</div>
-                                </div>
                             </div>
 
-                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <label for="class">Chapter Topic:</label>
-                                    <input type="text" name="topic" value="{{ old('topic') }}"
-                                        placeholder="Chapter topic" class="form-control">
-                                    <div class="text-danger">{{ $errors->first('topic') }}</div>
-                                </div>
-                            </div>
-                        </div>
 
 
-
-                        <div class="form-group row">
-                            <div class="col-md-4">
-                                <label for="" class="col-md-12">Class</label>
-                                <div class="col-md-12">
-                                    <select name="class_id" id="" class="form-control" required>
-                                        <option value="">Select Class</option>
-                                        @foreach ($classes as $class)
-                                        <option {{ old('class_id') == $class->id ? 'selected' : '' }}
-                                            value="{{ $class->id }}">{{ $class->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="text-danger">{{ $errors->first('class_id') }}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="" class="col-md-12">Session</label>
-                                <div class="col-md-12">
-                                    <select name="session_id" id="" class="form-control" required>
-                                        <option value="">Select Session</option>
-                                        @foreach ($sessiones as $session)
-                                        <option {{ old('session_id') == $session->id ? 'selected' : '' }}
-                                            value="{{ $session->id }}">{{ $session->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="text-danger">{{ $errors->first('session_id') }}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="" class="col-md-12">Examinaiton Type</label>
-                                <div class="col-md-12">
-                                    <select name="examination_type_id" id="" class="form-control" required>
-                                        <option value="">Select One</option>
-                                        @foreach ($examTypies as $examtype)
-                                        <option {{ old('examination_type_id') == $examtype->id ? 'selected' : '' }}
-                                            value="{{ $examtype->id }}">{{ $examtype->name }}</option>
-                                        @endforeach subjects
-                                    </select>
-                                    <div class="text-danger">{{ $errors->first('examination_type_id') }}</div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <hr />
-                        <br>
-                        <br>
-
-
-
-
-                        <div class="row" style="margin-bottom:5%;">
-                            <input type="hidden" value="0" class="questionIndex" />
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10"
-                                style="border: 1px dashed #e2d1d1;padding-top:20px;padding-bottom:20px;margin-left:-5%;">
-                                <div class="row">
+                            <div class="form-group row">
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <label for="Subject" class="col-md-12">Chapter :</label>
                                     <div class="col-md-12">
 
-                                        @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                        @endif
+                                        <select name="chapter_id" id="chapter_id" class="form-control">
+                                            <option value="">Select Chapter</option>
 
+                                        </select>
+                                        <div class="text-danger">{{ $errors->first('chapter_id') }}</div>
+                                    </div>
+                                </div>
 
-
-
-                                        <div style="margin-bottom:10px;">
-                                            <div class="row">
-
-
-                                                <div class="col-md-12 mb-2">
-                                                    <textarea name="describe[]" class="form-control"
-                                                        placeholder="leave empty if have not" rows="2"></textarea>
-                                                </div>
- 
-
-                                                <div class="col-md-1 mt-3">
-                                                    <br><br><br>
-                                                    <h5>#1)</h5> 
-                                                </div>
-                                                <div class="col-md-11">
-                                                    <div class="form-group">
-                                                        <img class="mb-2" alt="" style="max-width: 200px">
-                                                        <input type="file" name="image[]" class="form-control-file"
-                                                            accept="image/*">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <textarea name="question[]" type="text" class="form-control" placeholder="write your question here"
-                                                            required></textarea>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div style="border-bottom: 1px dashed #efeaea;margin-bottom:15px;"></div>
-                                        <div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <label for="">Pattern</label>
-                                                    <select name="0_pattern[]" class="form-control">
-                                                        <option value="ক">ক</option>
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <label for="">Option</label>
-                                                    <input name="0_option[]" type="text" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label for="">Answer</label>
-                                                    <select name="0_answer[]" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                        <option value="0">False</option>
-                                                        <option value="1">Correct</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <label for="">&nbsp;</label>
-                                                    <button type="button" data-appendid="0"
-                                                        class="appendPatternOptionDiv btn btn-sm btn-primary"
-                                                        style="margin-top: 25px;margin-left: -4px">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <select name="0_pattern[]" class="form-control">
-                                                        <option value="খ">খ</option>
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <input name="0_option[]" type="text" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select name="0_answer[]" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                        <option value="0">False</option>
-                                                        <option value="1">Correct</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <select name="0_pattern[]" class="form-control">
-                                                        <option value="গ">গ</option>
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <input name="0_option[]" type="text" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select name="0_answer[]" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                        <option value="0">False</option>
-                                                        <option value="1">Correct</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <select name="0_pattern[]" class="form-control">
-                                                        <option value="ঘ">ঘ</option>
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <input name="0_option[]" type="text" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select name="0_answer[]" class="form-control"
-                                                        style="margin-bottom:1%;">
-                                                        <option value="0">False</option>
-                                                        <option value="1">Correct</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="patternOptionDiv_0"></div>
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="class">Chapter Topic:</label>
+                                        <input type="text" name="topic" value="{{ old('topic') }}" placeholder="Chapter topic"
+                                               class="form-control">
+                                        <div class="text-danger">{{ $errors->first('topic') }}</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1" style="margin-right:-5%;">
-                                <div style="position: absolute;bottom: 0;">
-                                    <button data-appendWholeDiv="1" data-appendid="1" type="button"
-                                        class="appendWholeQuestionDiv btn btn-sm btn-primary" style="margin-top: 25px;">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+
+
+
+                            <div class="form-group row">
+                                <div class="col-md-4">
+                                    <label for="" class="col-md-12">Class</label>
+                                    <div class="col-md-12">
+                                        <select name="class_id" id="" class="form-control" required>
+                                            <option value="">Select Class</option>
+                                            @foreach ($classes as $class)
+                                                <option {{ old('class_id') == $class->id ? 'selected' : '' }}
+                                                        value="{{ $class->id }}">{{ $class->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="text-danger">{{ $errors->first('class_id') }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="" class="col-md-12">Session</label>
+                                    <div class="col-md-12">
+                                        <select name="session_id" id="" class="form-control" required>
+                                            <option value="">Select Session</option>
+                                            @foreach ($sessiones as $session)
+                                                <option {{ old('session_id') == $session->id ? 'selected' : '' }}
+                                                        value="{{ $session->id }}">{{ $session->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="text-danger">{{ $errors->first('session_id') }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="" class="col-md-12">Examinaiton Type</label>
+                                    <div class="col-md-12">
+                                        <select name="examination_type_id" id="" class="form-control" required>
+                                            <option value="">Select One</option>
+                                            @foreach ($examTypies as $examtype)
+                                                <option {{ old('examination_type_id') == $examtype->id ? 'selected' : '' }}
+                                                        value="{{ $examtype->id }}">{{ $examtype->name }}</option>
+                                            @endforeach subjects
+                                        </select>
+                                        <div class="text-danger">{{ $errors->first('examination_type_id') }}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div id="appendNewQuestion_1" class="wholeQNewAppendDiv">
 
-                        </div>
+                            <hr />
+                            <br>
+                            <br>
 
-                        <div class="row justify-content-around">
-                            <a class="btn btn-danger" href="{{ route('admin.mcq.index') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
 
-                        </div>
-                    </form>
+
+
+                            <div class="row" style="margin-bottom:5%;">
+                                <input type="hidden" value="0" class="questionIndex" />
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10"
+                                     style="border: 1px dashed #e2d1d1;padding-top:20px;padding-bottom:20px;margin-left:-5%;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
+
+
+
+                                            <div style="margin-bottom:10px;">
+                                                <div class="row">
+
+
+                                                    <div class="col-md-12 mb-2">
+                                                        <textarea name="describe[]" class="form-control"
+                                                                  placeholder="leave empty if have not" rows="2"></textarea>
+                                                    </div>
+
+
+                                                    <div class="col-md-1 mt-3">
+                                                        <br><br><br>
+                                                        <h5>#1)</h5>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <div class="form-group">
+                                                            <img class="mb-2" alt="" style="max-width: 200px">
+                                                            <input type="file" name="image[]" class="form-control-file">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <textarea name="question[]" type="text" class="form-control"
+                                                                      placeholder="write your question here" required></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="border-bottom: 1px dashed #efeaea;margin-bottom:15px;"></div>
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for="">Pattern</label>
+                                                        <select name="0_pattern[]" class="form-control">
+                                                            <option value="ক">ক</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <label for="">Option</label>
+                                                        <input name="0_option[]" type="text" class="form-control"
+                                                               style="margin-bottom:1%;">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label for="">Answer</label>
+                                                        <select name="0_answer[]" class="form-control" style="margin-bottom:1%;">
+                                                            <option value="0">False</option>
+                                                            <option value="1">Correct</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <label for="">&nbsp;</label>
+                                                        <button type="button" data-appendid="0"
+                                                                class="appendPatternOptionDiv btn btn-sm btn-primary"
+                                                                style="margin-top: 25px;margin-left: -4px">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select name="0_pattern[]" class="form-control">
+                                                            <option value="খ">খ</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input name="0_option[]" type="text" class="form-control"
+                                                               style="margin-bottom:1%;">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <select name="0_answer[]" class="form-control" style="margin-bottom:1%;">
+                                                            <option value="0">False</option>
+                                                            <option value="1">Correct</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select name="0_pattern[]" class="form-control">
+                                                            <option value="গ">গ</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input name="0_option[]" type="text" class="form-control"
+                                                               style="margin-bottom:1%;">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <select name="0_answer[]" class="form-control" style="margin-bottom:1%;">
+                                                            <option value="0">False</option>
+                                                            <option value="1">Correct</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <select name="0_pattern[]" class="form-control">
+                                                            <option value="ঘ">ঘ</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <input name="0_option[]" type="text" class="form-control"
+                                                               style="margin-bottom:1%;">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <select name="0_answer[]" class="form-control" style="margin-bottom:1%;">
+                                                            <option value="0">False</option>
+                                                            <option value="1">Correct</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="patternOptionDiv_0"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="margin-right:-5%;">
+                                    <div style="position: absolute;bottom: 0;">
+                                        <button data-appendWholeDiv="1" data-appendid="1" type="button"
+                                                class="appendWholeQuestionDiv btn btn-sm btn-primary" style="margin-top: 25px;">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="appendNewQuestion_1" class="wholeQNewAppendDiv">
+
+                            </div>
+
+                            <div class="row justify-content-around">
+                                <a class="btn btn-danger" href="{{ route('admin.mcq.index') }}">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 @endsection
 
 
 @section('customjs')
 
-<script>
-    var qOptionIndex = 0;
+    <script>
+        var qOptionIndex = 0;
         $(document).on('click', '.appendPatternOptionDiv', function(e) {
             e.preventDefault();
             qOptionIndex = $(this).data('appendid');
@@ -523,11 +515,11 @@
             wqNex--;
             console.log('lase nex ' + wqNex + 'previous ' + removeWholeId);
         });
-</script>
+    </script>
 
 
-<script>
-    $(document).on('keyup', '.type', function() {
+    <script>
+        $(document).on('keyup', '.type', function() {
             var id = $(this).data('id');
             var amount = nanCheck($('#checked_amount_id_' + id).val());
             if (amount) {
@@ -568,11 +560,11 @@
             }
             return total;
         }
-</script>
+    </script>
 
 
-<script>
-    $('form').on('change', 'input[type="file"]', function(e) {
+    <script>
+        $('form').on('change', 'input[type="file"]', function(e) {
 
             var img = e.target.previousElementSibling;
             var reader = new FileReader();
@@ -582,6 +574,31 @@
             };
             // read the image file as a data URL.
             reader.readAsDataURL(this.files[0]);
+        });
+
+
+        var validForm = false
+
+        $('#addForm').on('submit', function(e) {
+
+            if (validForm) {
+
+            } else {
+                e.preventDefault();
+                let form = $(this);
+                let route = $(this).attr('action');
+                let formData = $(this).serialize();
+
+                $.post(route, formData).done(function(data) {
+                    if (data.saved) {
+                        validForm = true
+                        $('#addForm').submit();
+                    } else if (!data.success) {
+                        toastr.error(data.message);
+                    }
+                });
+            }
+
         });
 
 
@@ -607,8 +624,7 @@
                 }
             });
         });
-</script>
+    </script>
 
 
 @endsection
-
