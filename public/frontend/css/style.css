@@ -1,0 +1,770 @@
+@import "default.css";
+/*================
+12. COMPANY SECTION
+13. BRANCH PAGE
+14. MENAGEMENT SECTION
+
+==================*/
+
+
+@font-face {
+  font-family: brush;
+  src: url("../fonts/brush script mt kursiv.ttf");
+  src: url("../fonts/BRUSHSCI.ttf");
+}
+
+
+
+/*HEADER TOP*/
+.section-header-top {
+    padding: 10px 0;
+    background: #f3f3f3;
+}
+
+.logo img {
+    width: 148px;
+    margin-right: 10px;
+}
+
+.logo h6 {
+    color: #141F88;
+    font-size: 25px;
+    font-weight: 700;
+    position: relative;
+}
+
+.logo a h1{
+    font-family:brush;
+    color: #056fad;
+}
+
+.ht-right {
+    text-align: right;
+    padding: 20px 0;
+}
+
+.ht-right-top a {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--wc);
+    background: var(--sc);
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    border: 1px solid var(--sc);
+    transition: .4s;
+    margin-left: 5px;
+}
+
+.ht-right-top a:hover {
+    color: var(--sc);
+    background: var(--wc);
+
+}
+
+.ht-right-bottom p {
+    font-size: 20px;
+    margin: 0;
+    margin-top: 10px;
+    font-weight: 600;
+
+}
+
+/*HEADER TOP END*/
+
+header {
+    background: var(--sc);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.menubar {
+    background: var(--sc);
+    height: 100%;
+}
+
+.menubar ul>li {
+    display: inline-block;
+}
+
+.menubar>ul>li>a {
+    background: var(--sc);
+    padding: 13px;
+    display: inline-block;
+    margin-right: 5px;
+    text-transform: capitalize;
+    color: var(--wc);
+}
+
+.menubar>ul>li>a>i {
+    margin-left: 4px;
+}
+
+/*sub menu*/
+.sub-btn {
+    position: relative;
+}
+
+.sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 170px;
+    background: var(--sc);
+    border-top: 1px solid var(--pc);
+    border-bottom: 1px solid var(--pc);
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: .3s;
+    z-index: 2;
+}
+
+.sub-btn:hover .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(100%);
+}
+
+.sub-menu ul li {
+    display: block;
+}
+
+.sub-menu ul li a {
+    padding: 5px 8px;
+    background: var(--sc);
+    display: block;
+    width: 100%;
+    color: var(--wc);
+}
+
+.sub-menu ul li a:hover {
+    background: var(--wc);
+    color: var(--pc);
+}
+
+.sub-menu ul li a i {
+    margin-right: 8px;
+}
+
+.child-btn a .fa-angle-down {
+    float: right;
+    padding-top: 3px;
+}
+
+.child-btn {
+    position: relative;
+}
+
+.child-menu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 170px;
+    background: var(--sc);
+    border-top: 1px solid var(--pc);
+    border-bottom: 1px solid var(--pc);
+    border-left: 1px solid var(--pc);
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: .3s;
+}
+
+.child-btn:hover .child-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(100%);
+}
+
+.child-menu a i {
+    margin-right: 8px;
+}
+
+.child-btn a .fa-angle-down {
+    margin-right: 0;
+}
+
+
+/*MOBILE MENU*/
+.mobile-btn {
+    float: right;
+}
+
+.mobile-bars {
+    cursor: pointer;
+    display: inline-block;
+    padding: 12px;
+}
+
+.mobile-bars:hover span:nth-child(2) {
+    width: 22px;
+}
+
+.mobile-bars:hover span {
+    background: var(--tc);
+}
+
+.mobile-bars span {
+    font-size: 30px;
+    color: var(--wc);
+    width: 20px;
+    display: inline-block;
+    transition: .4s;
+}
+
+.mobile-bars span:last-child {
+    margin-bottom: 0;
+}
+
+.mobile-btn span {
+    content: "";
+    height: 2px;
+    width: 28px;
+    background: var(--wc);
+    display: block;
+    margin-bottom: 7px;
+}
+
+.mobile-menu {
+    width: 280px;
+    background: var(--wc);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 3;
+    border-right: 1px solid var(--gc);
+    margin-left: -350px;
+    transition: .4s;
+    overflow: auto;
+
+}
+
+.sidenav_2 {
+    margin-left: 0 !important;
+}
+
+.main-mobile-add {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.56);
+    z-index: 2;
+}
+
+/*MOBILE MENU END*/
+
+
+/*SLIDER SECTION*/
+.slider-carosel {
+    background: var(--gc);
+    padding: 10px;
+}
+
+.carousel-item {
+    position: relative;
+}
+
+.carousel-item .carosel-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.carosel-title {
+    background: rgba(0, 0, 0, 0.56);
+    width: 100%;
+}
+
+.carosel-title h4 {
+    font-size: 18px;
+    color: var(--wc);
+    padding: 10px;
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.other {
+    background: var(--wc);
+    padding: 10px;
+    height: 100%;
+}
+
+.slider-image-custom {
+    height: 300px;
+}
+
+
+
+.marque {
+    padding: 0;
+    margin: 0;
+}
+
+.marque a {
+    text-decoration: none;
+    color: var(--pc);
+    margin-right: 50px;
+    font-size: 16px;
+}
+
+.marque a i {
+    font-size: 10px;
+    margin-right: 8px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex .icon i {
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.right-notic .card-body marquee {
+    height: 100%;
+}
+
+.right-notic .card-body {
+    padding: 10px;
+    padding-top: 0;
+    border: 1px solid var(--gc);
+}
+
+.right-notic .card-header {
+    background: #1C6BAE;
+    color: var(--wc);
+    border-radius: 2px;
+    -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    padding: 10px 0;
+}
+
+.right-notic .card-header h5 {
+    margin: 0;
+}
+
+.right-notic .flex {
+    background: #396a91;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 2px;
+    color: var(--wc);
+}
+
+.right-notic .txt a {
+    color: var(--txt-color);
+    text-decoration: none;
+}
+
+.right-notic .flex:hover .txt a {
+    text-decoration: underline;
+
+}
+
+/*body-right end*/
+
+
+
+/*FOOTER SECTION*/
+footer {
+    background: var(--sc);
+    color: var(--wc);
+}
+
+.footer-box {
+    margin-bottom: 10px;
+}
+
+.footer-head h5 {
+    text-transform: uppercase;
+    color: var(--wc);
+}
+
+.footer-content a {
+    text-decoration: none;
+    color: var(--wc);
+    display: block;
+    padding: 5px 0px;
+    -webkit-transition: .3s;
+    transition: .2s;
+
+}
+
+.footer-content a i {
+    transition: .2s;
+}
+
+.footer-content.nolink a {
+    cursor: auto;
+}
+
+.footer-content a i.fa-circle {
+    margin-right: 3px;
+    -webkit-transition: .3s;
+    transition: .2s;
+    font-weight: 600;
+    color: var(--wc);
+    font-size: 8px;
+}
+
+.footer-content a:hover i {
+    margin-right: 3px;
+    margin-left: 3px;
+
+}
+
+/* .footer-content a:hover {
+    color: #778FEA;
+} */
+
+.address-box {
+    padding: 5px 0;
+}
+
+.address-icon i {
+    font-size: 15px;
+    margin-right: 8px;
+    color: var(--wc);
+}
+
+.address-details span {
+    text-transform: capitalize;
+    color: var(--wc);
+}
+
+/*END FOOTER SECTION*/
+
+/*COPYRIGHT SECTION*/
+.copyright-section {
+
+    background: var(--tc);
+}
+
+.copyright-left-content p {
+    margin-bottom: 0;
+    color: var(--wc);
+    padding: 15px 0;
+    text-transform: capitalize;
+    text-align: left;
+
+}
+
+.copyright-right-content p {
+    margin-bottom: 0;
+    color: var(--wc);
+    padding: 15px 0;
+    text-transform: capitalize;
+    text-align: right;
+}
+
+.copyright-content p a {
+    color: #BA2B20;
+    font-weight: 600;
+}
+
+/*COPYRIGHT SECTION*/
+
+
+/*Batch SECTION*/
+.betch-table {
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    padding: 20px;
+    border-radius: 5px;
+
+}
+
+.first-login p {
+    color: var(--wc) !important;
+    font-size: 30px;
+}
+
+/*Batch SECTION END*/
+
+
+
+/*=====================
+	blog page
+======================*/
+.breadcrumb li a {
+    color: var(--tc-red);
+    text-decoration: none;
+}
+
+
+
+.p-blog-box .blog-img img {
+    width: 100%;
+    height: 130px;
+}
+
+.p-blog-box .card-body a {
+    font-weight: 600;
+    text-transform: inherit;
+    line-height: 24px;
+    font-size: 15px;
+    display: block;
+    color: var(--tc-black);
+    text-decoration: none;
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+
+.p-blog-box {
+    transition: .4s;
+    margin-bottom: 30px;
+}
+
+.p-blog-box:hover {
+    transform: translateY(-2%);
+}
+
+.custom-card {
+    padding: 5px;
+}
+
+.p-blog-box .card span {
+    font-size: 14px;
+    padding-bottom: 3px;
+    display: block;
+    color: #777;
+}
+
+.p-blog-box .card span i {
+    padding-right: 5px;
+}
+
+.breadcrumb {
+    background: var(--wc);
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb {
+    padding: 20px 0 !important;
+    margin: 0;
+}
+
+
+.section-title {
+    position: relative;
+    border-bottom: 2px solid #ddd;
+}
+
+.section-title h5 {
+    text-transform: capitalize;
+    display: inline-block;
+    color: var(--gc);
+}
+
+.section-title h2 {
+    text-transform: capitalize;
+    display: inline-block;
+
+}
+
+/*=====================
+	blog page end
+======================*/
+/*=====================
+	lecture section
+======================*/
+.sheet-box {
+    box-shadow: rgb(100 102 111 / 13%) 1px 2px 8px 1px;
+    padding: 18px;
+    display: block;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+}
+
+.sheet-image img {
+    width: 100%;
+    padding-bottom: 8px;
+    border-radius: 16px;
+}
+
+.sheet-price-name {
+    font-weight: 700;
+    color: var(--sc);
+    text-transform: capitalize;
+}
+
+.sheet-price {
+    color: red;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.sheet-head h4 {
+    font-size: 20px;
+    margin-top: 12px;
+}
+
+.sheet-price p {
+    margin: 0;
+    padding-bottom: 3px;
+}
+
+.sheet-detail {}
+
+.sheet-img {}
+
+.sheet-img img {
+    width: 100%;
+}
+
+.sheet-body {}
+
+
+.ebook {}
+
+.ebook img {
+    width: 100%;
+}
+
+.ebookbox {
+    border: 1px solid #00c6ff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+/*=====================
+	lecture section end
+======================*/
+
+/*school question*/
+
+.school-question {
+    text-align: center;
+    padding: 30px 0;
+    display: block;
+    border: 1px solid #04bda3;
+    transition: .3s;
+}
+
+.school-question.box:hover {
+    border: 1px solid #0074bc;
+    background: #e0f2ff;
+    cursor: pointer;
+}
+
+
+.school-question p {
+    margin: 0;
+    color: var(--wc);
+    font-size: 18px;
+}
+
+.school-question h4 {
+    font-size: 18px;
+    color: var(--sc);
+    padding-bottom: 4px;
+    line-height: 20px;
+}
+
+.school-question span {
+    color: var(--sc);
+    font-size: 32px;
+    font-weight: bolder;
+    border-radius: 100%;
+    text-align: center;
+}
+
+.gardient-message p {
+    color: var(--pc);
+    padding: 5px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.gardient-message h4 {
+    font-size: 25px;
+}
+
+.content-right {
+    text-align: right;
+}
+
+.see-all {
+    font-weight: 600;
+    color: var(--sc);
+}
+
+.school-question p i {
+    color: var(--sc);
+    padding: 0 5px;
+}
+
+/*school question end*/
+
+
+
+
+
+/*==================
+    login and reg page
+==================*/
+.registation-section {
+    background: var(--bg-gc);
+}
+
+.registrationtitle {
+    margin: 0 auto;
+    padding: 5px;
+    background-color: #00c6ff;
+    max-width: 600px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.registation {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--wc);
+    padding: 50px;
+    box-shadow: 0px 0px 15px 5px var(--gc);
+    border-radius: 5px;
+
+}
+
+.registation .form-group label {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.button {
+    background: var(--wc);
+    color: var(--sc);
+    border: 1px solid var(--sc);
+    text-decoration: none;
+    transition: .3s;
+}
+
+.button:hover {
+    background: var(--sc);
+    color: var(--wc);
+
+}
+
+/*==================
+login and reg page
+==================*/

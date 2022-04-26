@@ -1,0 +1,134 @@
+@extends('backend.layouts.app')
+@section('title', 'Offline MCQ Exam Absend Students SMS')
+@section('content')
+
+    <div id="content" class="content">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title">Send SMS to Offline MCQ exam absent students</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload">
+                        <i class="fa fa-redo"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                @if ($exam)
+                    <div class="bg-light border py-2 text-center" style="position: relative;">
+                        <h1>Exam Name : {{ optional($exam->OfflineMcqQuestionSubjects)->question_no }}</h1>
+                        <h3>Chapter : {{ optional($exam->OfflineMcqQuestionSubjects->chapter)->name }}</h3>
+                        <h3>Topic : {{ optional($exam->OfflineMcqQuestionSubjects)->topic }}</h3>
+                        <h4>Session: {{ optional($exam->sessiones)->name }}</h4>
+                        <h4>Class: {{ optional($exam->classes)->name }}</h4>
+                        <h4>Batch: {{ optional($exam->batchsetting)->batch_name }}</h4>
+                        <h4>Total Mark : {{ optional($exam->OfflineMcqQuestionSubjects)->total_mark }}</h4>
+                        <h4>Exam hold on : {{ date('d-m-Y h:i A', strtotime($exam->exam_start_date_time)) }} to
+                            {{ date('d-m-Y h:i A', strtotime($exam->exam_end_date_time)) }} </h4>
+                    </div>
+                @endif
+
+                <form action="{{ route('offlinemcq.result.sms') }}" method="POST">
+                    @csrf
+
+                    @if (isset($all_students))
+                        <input type="hidden" name="sms_type" value="all">
+                    @endif
+
+                     <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+                    <input type="hidden" name="test_name" value="{{ optional($exam->OfflineMcqQuestionSubjects)->question_no}}">
+                    <input type="hidden" name="subject_name" value="{{ optional($exam->OfflineMcqQuestionSubjects)->topic}}">
+
+                    <table class="table table-hovered table-bordered table-td-valign-middle">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap"><input type="checkbox" id="checkAll">
+                                    <label for="checkAll" style="margin-bottom: -2px;margin-left: 5px;">Check
+                                        All</label>
+                                </th>
+                                <th>SL</th>
+                                <th class="text-nowrap">Student ID</th>
+                                <th class="text-nowrap">Student Name</th>
+                                <th class="text-nowrap">Mobile</th>
+                                <th class="text-nowrap">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            @isset($students)
+                                @foreach ($students as $student)
+                                    @if (isset($all_students))
+                                        <tr>
+                                            <td>
+                                                @if ($student->user->mobile)
+                                                    <input type="checkbox" name="students_ids[]" value="{{ $student->id ?? null }}">
+                                                @endif
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $student->user->useruid ?? '' }}</td>
+                                            <td>{{ $student->user->name ?? '' }}</td>
+                                            <td>{{ $student->user->mobile ?? '' }}</td>
+                                            @if ($student->result != null)
+                                                <td>{{ $student->result }}</td>
+                                            @elseif($student->result == null)
+                                                <td>Absent</td>
+                                            @endif
+                                        </tr>
+                                    @elseif(!isset($student->resultId))
+                                     <tr>
+                                            <td>
+                                                @if ($student->user->mobile)
+                                                    <input type="checkbox" name="students_ids[]" value="{{ $student->id ?? null }}">
+                                                @endif
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $student->user->useruid ?? '' }}</td>
+                                            <td>{{ $student->user->name ?? '' }}</td>
+                                            <td>{{ $student->user->mobile ?? '' }}</td>
+                                            <td>Absent</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endisset
+
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        @if (!isset($all_students))
+                        
+                        @endif
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+@endsection
+
+@section('customjs')
+    <script>
+        $("#checkAll").click(function() {
+            $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+        });
+
+        $("input[type=checkbox]").click(function() {
+            if (!$(this).prop("checked")) {
+                $("#checkAll").prop("checked", false);
+            }
+        });
+    </script>
+@endsection

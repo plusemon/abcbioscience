@@ -1,0 +1,161 @@
+@media only screen and (max-width:1200px) {
+	.logo h6 {
+		font-size: 22px;
+	}
+}
+
+@media only screen and (max-width:767px) {
+	.logo img {
+		width: 88px;
+		margin-right: 0px;
+		margin-bottom: 7px;
+	}
+	.logo h6 {
+		font-size: 20px;
+	}
+	.box-box {
+		width: 50%;
+	}
+	.company-profile-box {
+		padding: 10px;
+	}
+	.apply_post {
+		width: 81%;
+	}
+	.ht-right-bottom p{
+		font-size: 17px;
+	}
+	.ht-right-top a{
+		padding: 0px 4px;
+	}
+	.first.branch-box{
+		margin-left: inherit;
+		margin: 0 auto;
+	}
+	.second.branch-box{
+		margin: 0 auto;
+		margin-top: 25px;
+	}
+}
+
+@media only screen and (max-width: 810px) {
+	.account-type span {
+		width: 50%;
+	}
+	.application span {
+		width: 50% !important;
+	}
+}
+
+@media only screen and (max-width: 680px) {
+	.company-name {
+		display: block;
+	}
+}
+
+@media only screen and (max-width: 605px) {
+	.account-type span {
+		width: 100%;
+	}
+	.application span {
+		width: 100% !important;
+	}
+}
+
+@media only screen and (max-width: 575px) {
+	.balance-box.custom {
+		padding: 20px 0px;
+	}
+	.modify-table tr td label {
+		font-size: 13px;
+	}
+	.modify-table tr td:first-child {
+		width: 100px;
+		/*        background: red;*/
+	}
+	.bordered {
+		padding: 10px 0;
+	}
+	.balance-section .custom-container {
+		padding: 0 5px;
+	}
+	.mobile-input-section .custom-container {
+		padding: 0 5px;
+	}
+	.slider-section .carousel-item img {
+		min-height: 160px;
+	}
+	.logo img {
+		width: 70px;
+	}
+	.ht-right-top a {
+		font-size: 11px;
+		text-transform: uppercase;
+		border-left: none;
+		padding: 0px 2px;
+	}
+	.ht-right-bottom p {
+		font-size: 15px;
+		margin: 2px;
+	}
+	.ht-right {
+		padding: 0;
+	}
+	 .logo h6 {
+		font-size: 18px;
+	}
+
+}
+
+@media only screen and (max-width: 480px) {
+	.single-box:hover .content span {
+		color: var(--wc);
+		font-size: 16px;
+	}
+	.box-box {
+		width: 100%;
+	}
+	.ht-right-bottom{
+		display: none;
+	}
+	.section-header-top > .container > .row{
+		align-items: center;
+	}
+}
+
+@media only screen and (max-width: 460px) {
+	.company-name {
+		font-size: 20px;
+	}
+	
+}
+
+@media only screen and (max-width: 450px) {
+	.form-left {
+		width: 163px;
+	}
+	.deposit_type {
+		width: 53%;
+	}
+	.apply_post {
+		width: 75%;
+	}
+	.mobile-input-box label {
+		font-size: 13px;
+	}
+	.carrer-link{
+		display:none;
+	}
+	.logo h6 {
+		font-size: 16px;
+	}
+}
+
+@media only screen and (max-width: 375px) {
+	.company-name {
+		font-size: 20px;
+	}
+	.logo h6 {
+		font-size: 14px;
+	}
+}
