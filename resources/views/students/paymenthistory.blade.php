@@ -80,12 +80,14 @@
                                                         <p class="btn btn-success btn-sm">Verification Pending</p>
                                                     @else
                                                         <p class="btn btn-danger btn-sm">Unpaid</p>
-                                                        <a href="#" class="btn btn-success" data-toggle="modal"
+                                                        {{-- <a href="#" class="btn btn-success" data-toggle="modal"
                                                            data-target="#exampleModal_{{ $collection->id }}"> <i
-                                                               class="fa fa-money-bill"></i> Make Payment</a>
-                                                        <button class="btn btn-primary" id="bKash_button">Pay with bKash</button>
-                                                        <button class="btn btn-primary" onclick="createPayment()">Pay with
-                                                            bKash</button>
+                                                               class="fa fa-money-bill"></i> Make Payment</a> --}}
+
+                                                        <button class="btn btn-success"
+                                                                onclick="init_bkash({{ $collection->amount ?? 0 }})"
+                                                                id="bKash_button" disabled><i class="fa fa-money-bill"></i> Make
+                                                            Payment</button>
                                                     @endif
 
 
@@ -166,7 +168,6 @@
         </div>
     </div>
 
-
 @endsection
 
 
@@ -178,70 +179,75 @@
         var id_token = '';
         var paymentID = '';
 
-        function createPayment() {
-            $.get("{{ route('token') }}").done(function(res) {
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                }
+            });
+
+            grand_token()
+        })
+
+        function grand_token() {
+            $.post("{{ route('token') }}").done(function(res) {
+                console.log('Token:', res);
                 if (res && res.id_token != null) {
+                    console.log('Payment button enabled');
                     id_token = res.id_token;
-                    paymentID = res.paymentID;
-                    $('#bKash_button').removeAttr('disabled');
+                    $('#bKash_button').attr('disabled', false);
                 }
             });
         }
 
-        bKash.init({
-            paymentMode: 'checkout', //fixed value ‘checkout’ 
-            //paymentRequest format: {amount: AMOUNT, intent: INTENT} 
-            //intent options 
-            //1) ‘sale’ – immediate transaction (2 API calls) 
-            //2) ‘authorization’ – deferred transaction (3 API calls) 
-            paymentRequest: {
-                amount: '100.50', //max two decimal points allowed 
-                intent: 'sale'
-            },
-            createRequest: function(
-                request
-            ) { //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method 
-                $.ajax({
-                    url: 'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/create',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function(data) {
-                        data = JSON.parse(data);
+        function init_bkash(amount) {
+
+            bKash.init({
+                paymentMode: 'checkout', //fixed value ‘checkout’ 
+                //paymentRequest format: {amount: AMOUNT, intent: INTENT} 
+                //intent options 
+                //1) ‘sale’ – immediate transaction (2 API calls) 
+                //2) ‘authorization’ – deferred transaction (3 API calls) 
+                paymentRequest: {
+                    amount, //max two decimal points allowed 
+                    intent: 'sale'
+                },
+                createRequest: function(request) {
+                    console.log('Create Request Send:', request)
+                    //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method 
+
+                    $.post("{{ route('createpayment') }}", {
+                        id_token
+                    }).done(function(data) {
                         if (data && data.paymentID != null) {
                             paymentID = data.paymentID;
-                            bKash.create().onSuccess(
-                                data
-                            ); //pass the whole response data in bKash.create().onSucess() method as a parameter 
+                            console.log('Set payment id and call bkash create onsuccess event listener:',
+                                data)
+                            bKash.create().onSuccess(data);
+                            //pass the whole response data in bKash.create().onSucess() method as a parameter 
                         } else {
                             bKash.create().onError();
                         }
-                    },
-                    error: function() {
-                        bKash.create().onError();
-                    }
-                });
-            },
-            executeRequestOnAuthorization: function() {
-                $.ajax({
-                    url: 'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/execute',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        "paymentID": paymentID
-                    }),
-                    success: function(data) {
-                        data = JSON.parse(data);
+                    })
+                },
+                executeRequestOnAuthorization: function() {
+                    console.log('Executing payment:', data)
+                    $.post("{{ route('executepayment') }}", {
+                        id_token,
+                        paymentID
+                    }).done(function(data) {
+                        console.log('Payment successfull:', data)
+
                         if (data && data.paymentID != null) {
-                            window.location.href = "success.html"; //Merchant’s success page 
+                            alert('payment success');
+                            window.location.reload()
                         } else {
                             bKash.execute().onError();
                         }
-                    },
-                    error: function() {
-                        bKash.execute().onError();
-                    }
-                });
-            }
-        });
+                    })
+
+                }
+            });
+        }
     </script>
 @endpush

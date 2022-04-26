@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -44,17 +43,22 @@ class PaymentController extends Controller
 		curl_setopt($url, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 		$response = curl_exec($url);
 		curl_close($url);
-		$id_token = json_decode($response, true)['id_token'];
-		return $this->createpayment($id_token);
+
+		return json_decode($response, true);
+
+		// return	$id_token = json_decode($response, true)['id_token'];
+		// return $this->createpayment($id_token);
 	}
 
-	public function createpayment($id_token)
+	public function createpayment(Request $request)
 	{
+		$id_token = $request->get('id_token');
+
 		$request_data = array(
 			'amount' => 100,
 			'currency' => 'BDT',
 			'intent' => 'sale',
-			'merchantInvoiceNumber' => 'asdfasdf'
+			'merchantInvoiceNumber' => rand()
 		);
 
 
@@ -75,13 +79,8 @@ class PaymentController extends Controller
 
 		$response = curl_exec($url);
 		curl_close($url);
-		// return payment id
-		$paymentID = json_decode($response, true)['paymentID'];
-
-		return [
-			'id_token' => $id_token,
-			'paymentID' => $paymentID
-		];
+		
+		return json_decode($response, true);
 	}
 
 	public function executepayment(Request $request)
