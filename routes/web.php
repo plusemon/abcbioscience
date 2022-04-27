@@ -15,10 +15,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 Route::get('clear', function () {
-    $exitCode = Artisan::call('config:clear');
-    $exitCode = Artisan::call('cache:clear');
-    $exitCode = Artisan::call('config:cache');
-    $exitCode = Artisan::call('storage:link');
+    Artisan::call('optimize:clear');
     return 'DONE'; //Return anything
 });
 
