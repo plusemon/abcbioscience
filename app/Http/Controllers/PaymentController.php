@@ -3,22 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\PaymentHistory;
 
 class PaymentController extends Controller
 {
 
-	protected
-		$config = [
+	protected $config;
+
+	public function __construct()
+	{
+		$this->config = [
 			"tokenURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/token/grant",
 			"createURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/create",
 			"executeURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/execute/",
 
-			"app_key" => "5tunt4masn6pv2hnvte1sb5n3j",
-			"app_secret" => "1vggbqd4hqk9g96o9rrrp2jftvek578v7d2bnerim12a87dbrrka",
+			"app_key" => env('BKASH_APP_KEY'),
+			"app_secret" => env('BKASH_APP_SECRET'),
 
-			"username" => "sandboxTestUser",
-			"password" => "hWD@8vtzw0",
+			"username" => env('BKASH_USERNAME'),
+			"password" => env('BKASH_PASSWORD'),
 		];
+	}
 
 	public function grand_token()
 	{
@@ -52,13 +57,21 @@ class PaymentController extends Controller
 
 	public function createpayment(Request $request)
 	{
+		$request->validate([
+			'id_token' => ['required'],
+			'invoice_no' => ['required', 'string'],
+		]);
+
 		$id_token = $request->get('id_token');
+		$invoice_no = $request->get('invoice_no');
+
+		$data = PaymentHistory::where('invoice_no', strval($invoice_no))->first();
 
 		$request_data = array(
-			'amount' => 100,
+			'amount' => $data->amount,
 			'currency' => 'BDT',
 			'intent' => 'sale',
-			'merchantInvoiceNumber' => rand()
+			'merchantInvoiceNumber' => $data->invoice_no
 		);
 
 
@@ -79,7 +92,7 @@ class PaymentController extends Controller
 
 		$response = curl_exec($url);
 		curl_close($url);
-		
+
 		return json_decode($response, true);
 	}
 
@@ -103,9 +116,24 @@ class PaymentController extends Controller
 		curl_setopt($url, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($url, CURLOPT_FOLLOWLOCATION, 1);
 
-		$response = curl_exec($url);
+		$result = curl_exec($url);
 		curl_close($url);
 
-		return json_decode($response, true);
+		$response = json_decode($result, true);
+
+		if (isset($response['transactionStatus']) and $response['transactionStatus'] == 'Completed') {
+			$this->successAction($response);
+		}
+
+		return $response;
+	}
+
+	public function successAction($response)
+	{
+		$invoice_no = $response['merchantInvoiceNumber'];
+		$data =	PaymentHistory::where('invoice_no', strval($invoice_no))->first();
+
+		$data->status = 1;
+		return	$data->save();
 	}
 }

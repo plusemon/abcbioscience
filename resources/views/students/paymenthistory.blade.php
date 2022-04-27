@@ -40,6 +40,7 @@
                                             <th class="text-nowrap">Collection <br /> Month</th>
 
                                             <th class="text-nowrap">Fee Category</th>
+                                            <th class="text-nowrap">Amount</th>
                                             <th class="text-nowrap">Paid Date</th>
                                             <th class="text-nowrap">Status</th>
                                         </tr>
@@ -70,6 +71,9 @@
                                                     {{ $collection->feeCategores ? $collection->feeCategores->name : null }}
                                                 </td>
                                                 <td>
+                                                    {{ $collection->amount }}
+                                                </td>
+                                                <td>
                                                     {{ Date('d-m-Y h:i A', strtotime($collection->receive_date)) }}
                                                 </td>
 
@@ -79,21 +83,21 @@
                                                     @elseif($collection->status == 3)
                                                         <p class="btn btn-success btn-sm">Verification Pending</p>
                                                     @else
+                                                    {{-- <a href="#" class="btn btn-success" data-toggle="modal"
+                                                       data-target="#exampleModal_{{ $collection->id }}"> <i
+                                                           class="fa fa-money-bill"></i> Make Payment</a> --}}
                                                         <p class="btn btn-danger btn-sm">Unpaid</p>
-                                                        {{-- <a href="#" class="btn btn-success" data-toggle="modal"
-                                                           data-target="#exampleModal_{{ $collection->id }}"> <i
-                                                               class="fa fa-money-bill"></i> Make Payment</a> --}}
-
-                                                        <button class="btn btn-success"
-                                                                onclick="init_bkash({{ $collection->amount ?? 0 }})"
-                                                                id="bKash_button" disabled><i class="fa fa-money-bill"></i> Make
-                                                            Payment</button>
+                                                        @include(
+                                                            'layouts.partials.payment-gateway-modal-button',
+                                                            [
+                                                                'amount' => $collection->amount,
+                                                                'invoice_no' => $collection->invoice_no,
+                                                                'btn_text' => 'Make Payment'
+                                                            ]
+                                                        )
                                                     @endif
 
-
-
-
-                                                    <!-- Modal -->
+                                                    {{-- <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal_{{ $collection->id }}"
                                                          tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
@@ -149,7 +153,7 @@
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -168,86 +172,16 @@
         </div>
     </div>
 
+
+    @include('layouts.partials.payment-gateway-modal')
+
 @endsection
 
 
 @push('js')
-    <script id="myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js">
-    </script>
-
-    <script>
-        var id_token = '';
-        var paymentID = '';
-
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                }
-            });
-
-            grand_token()
-        })
-
-        function grand_token() {
-            $.post("{{ route('token') }}").done(function(res) {
-                console.log('Token:', res);
-                if (res && res.id_token != null) {
-                    console.log('Payment button enabled');
-                    id_token = res.id_token;
-                    $('#bKash_button').attr('disabled', false);
-                }
-            });
-        }
-
-        function init_bkash(amount) {
-
-            bKash.init({
-                paymentMode: 'checkout', //fixed value ‘checkout’ 
-                //paymentRequest format: {amount: AMOUNT, intent: INTENT} 
-                //intent options 
-                //1) ‘sale’ – immediate transaction (2 API calls) 
-                //2) ‘authorization’ – deferred transaction (3 API calls) 
-                paymentRequest: {
-                    amount, //max two decimal points allowed 
-                    intent: 'sale'
-                },
-                createRequest: function(request) {
-                    console.log('Create Request Send:', request)
-                    //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method 
-
-                    $.post("{{ route('createpayment') }}", {
-                        id_token
-                    }).done(function(data) {
-                        if (data && data.paymentID != null) {
-                            paymentID = data.paymentID;
-                            console.log('Set payment id and call bkash create onsuccess event listener:',
-                                data)
-                            bKash.create().onSuccess(data);
-                            //pass the whole response data in bKash.create().onSucess() method as a parameter 
-                        } else {
-                            bKash.create().onError();
-                        }
-                    })
-                },
-                executeRequestOnAuthorization: function() {
-                    console.log('Executing payment:', data)
-                    $.post("{{ route('executepayment') }}", {
-                        id_token,
-                        paymentID
-                    }).done(function(data) {
-                        console.log('Payment successfull:', data)
-
-                        if (data && data.paymentID != null) {
-                            alert('payment success');
-                            window.location.reload()
-                        } else {
-                            bKash.execute().onError();
-                        }
-                    })
-
-                }
-            });
-        }
-    </script>
+    {{--  #Bkash payment gateway integration
+    // 1. fn bkash_init(amount, invoice_no)
+    // 2. payment button #bKash_button trigger from modal
+    // 3. make payment  --}}
+    @include('layouts.partials.bkash-script')
 @endpush

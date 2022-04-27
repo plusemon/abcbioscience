@@ -46,11 +46,9 @@ class StudentController extends Controller
 
 	public function paymenthistory()
 	{
-
-		$data['paymenthistories']  = PaymentHistory::where('user_id',Auth::user()->id)
+		$data['paymenthistories']  = PaymentHistory::where('user_id', Auth::user()->id)
                                                         ->orderBy('id','DESC')
                                                         ->get();
-
 		return view('students.paymenthistory',$data);
 	}
 

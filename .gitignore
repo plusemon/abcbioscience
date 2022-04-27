@@ -6,6 +6,7 @@
 /DB
 /vendor
 .env
+*.zip
 .env.backup
 .phpunit.result.cache
 Homestead.json

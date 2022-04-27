@@ -1006,6 +1006,6 @@ Route::get('old-questions', 'FrontendController@old_questions')->name('old.quest
 
 
 // bkash api routes
-Route::post('token', 'PaymentController@grand_token')->name('token');
-Route::post('createpayment', 'PaymentController@createpayment')->name('createpayment');
-Route::post('executepayment', 'PaymentController@executepayment')->name('executepayment');
+Route::post('bkash/get_token', 'PaymentController@grand_token')->name('token');
+Route::post('bkash/create_payment', 'PaymentController@createpayment')->name('createpayment');
+Route::post('bkash/execute_payment', 'PaymentController@executepayment')->name('executepayment');
