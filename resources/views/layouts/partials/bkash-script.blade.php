@@ -1,7 +1,7 @@
 @if (env('BKASH_SANDBOX'))
-    <script id="myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
+    <script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 @else
-    <script src="https://checkout.pay.bka.sh/v1.2.0-beta"></script>
+    <script src="https://scripts.pay.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout.js"></script>
 @endif
 
 <script>
