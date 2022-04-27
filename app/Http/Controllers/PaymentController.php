@@ -13,9 +13,20 @@ class PaymentController extends Controller
 	public function __construct()
 	{
 		$this->config = [
-			"tokenURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/token/grant",
-			"createURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/create",
-			"executeURL" => "https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/execute/",
+			"tokenURL" =>
+			env('BKASH_SANDBOX') ?
+				"https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/token/grant" :
+				"https://checkout.pay.bka.sh/v1.2.0-beta/checkout/token/grant",
+
+			"createURL" =>
+			env('BKASH_SANDBOX') ?
+				"https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/create" :
+				"https://checkout.pay.bka.sh/v1.2.0-beta/checkout/payment/create",
+
+			"executeURL" =>
+			env('BKASH_SANDBOX') ?
+				"https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/payment/execute/" :
+				"https://checkout.pay.bka.sh/v1.2.0-beta/checkout/payment/execute/",
 
 			"app_key" => env('BKASH_APP_KEY'),
 			"app_secret" => env('BKASH_APP_SECRET'),
